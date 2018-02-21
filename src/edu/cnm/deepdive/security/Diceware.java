@@ -36,7 +36,10 @@ public class Diceware {
   private List<String> words;
   private Random rng = null;
 
-
+/**
+ * An overloaded Constructor Initializes an instance of <code>Diceware</code> that calls
+ * the Constructor that takes a {@link ResourceBundle} using the wordlist.
+ */
   public Diceware() {
     this(ResourceBundle.getBundle(DEFAULT_RESOURCE_BUNDLE));
   }
@@ -149,7 +152,22 @@ public class Diceware {
     return passphrase.toArray(new String[passphrase.size()]);
   }
 
-
+/**
+ * A method that takes an int and a String as parameters and generates a passphrase
+ * with how many words chosen by the int provided and the delimiter provided is the String that
+ * will be placed in between each word.
+ * 
+ * @param length                      the amount of words you want provided
+ * @param delimiter                   any character that you want in between each word (e.g. "-")
+ * @return                            returns the number of words, what characters should be inserted
+ *                                    between words, and true indicates that duplicate words will not be
+ *                                    allowed. 
+ * @throws NoSuchAlgorithmException   throws an exception if randomness is not allowed.
+ * @throws InsufficientPoolException  throws an exception if more words are asked for than are in
+ *                                    the wordlist provided, duplicates must be taken into account.
+ * @throws IllegalArgumentException   throws an exception if the requested amount of words is not
+ *                                    positive.
+ */
   public String generate(int length, String delimiter)
       throws NoSuchAlgorithmException, InsufficientPoolException, IllegalArgumentException {
     return generate(length, delimiter, true);
@@ -167,13 +185,33 @@ public class Diceware {
    * 
    * @throws InsufficientPoolException if word list has no words.
    * 
-   * @throws IllegalArgumentException if requested length issn't positive.
+   * @throws IllegalArgumentException if requested length isn't positive.
    */
   public String[] generate(int length)
       throws NoSuchAlgorithmException, InsufficientPoolException, IllegalArgumentException {
     return generate(length, true);
   }
 
+  
+  /**
+   * A method that generates a passphrase including an int for the amount of words in the
+   * passphrase, a String for any characters you would like between the words, and a boolean
+   * to declare whether you would like to include duplicate words or not. It uses a String Array
+   * to form the grouping of words a {@link StringBuilder} to place the words in a new array
+   * and outputs the passphrase in a String Array format.
+   * 
+   * @param length                      the amount of words you want provided
+   * @param delimiter                   any character that you want in between each word (e.g. "-")
+   * @param duplicatesAllowed           if duplicate words should be allowed.
+   * @return                            Returns the number of words, what characters should be inserted
+   *                                    between words, and true indicates that duplicate words will not be
+   *                                    allowed. 
+   * @throws NoSuchAlgorithmException   throws an exception if randomness is not allowed.
+   * @throws InsufficientPoolException  throws an exception if more words are asked for than are in
+   *                                    the wordlist provided, duplicates must be taken into account.
+   * @throws IllegalArgumentException   throws an exception if the requested amount of words is not
+   *                                    positive.
+   */
   public String generate(int length, String delimiter, boolean duplicatesAllowed)
       throws NoSuchAlgorithmException, InsufficientPoolException, IllegalArgumentException {
     String[] words = generate(length, duplicatesAllowed);
@@ -190,6 +228,11 @@ public class Diceware {
     return words.get(index);
   }
 
+  /**
+   * A nested class that extends {@link IllegalArgumentException} to handle the 
+   * {@link InsufficientPoolException} that is thrown.
+   *
+   */
   public static class InsufficientPoolException extends IllegalArgumentException {
 
     private InsufficientPoolException() {
