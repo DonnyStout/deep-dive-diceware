@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * is created and used for selecting words at random from the list.
  * 
  * @author D Stout with Deep Dive Coding Java Cohort 3
- * @version 0.2
+ * @version 0.3
  */
 public class Diceware {
 
@@ -104,7 +104,7 @@ public class Diceware {
    */
   public Random getRng() throws NoSuchAlgorithmException {
     if (rng == null) {
-      rng = SecureRandom.getInstanceStrong();
+      rng = new SecureRandom();
     }
     return rng;
   }
